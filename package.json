@@ -9,7 +9,8 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "qa": "pnpm format:check && pnpm lint"
+    "typecheck": "tsc --noEmit",
+    "qa": "pnpm format:check && pnpm typecheck && pnpm lint"
   },
   "dependencies": {
     "next": "16.1.1",
