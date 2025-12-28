@@ -1,5 +1,5 @@
-import { SpaceshipListPage } from "@/pages/spaceship-list-page/spaceship-list-page";
-import { SpaceshipListPageStoreProviderRSC } from "@/pages/spaceship-list-page/spaceship-list-page-store-provider.rsc";
+import { SpaceshipListPage } from "@/screens/spaceship-list-page/spaceship-list-page";
+import { SpaceshipListPageStoreProviderRSC } from "@/screens/spaceship-list-page/spaceship-list-page-store-provider.rsc";
 
 export default async function SpaceshipListPageEntry() {
   return (
