@@ -8,6 +8,7 @@ export const createSpaceship = (
   return {
     id: `ship-${String(spaceshipIdCounter++).padStart(3, "0")}`,
     name: "Starhawk",
+    imageUrl: "/spaceships/starhawk.png",
     role: "Hit-and-run tactics / Space Superiority",
     lengthMeters: 18,
     crewCount: 1,

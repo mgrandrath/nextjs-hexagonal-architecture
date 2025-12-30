@@ -1,6 +1,7 @@
 export type Spaceship = {
   id: string;
   name: string;
+  imageUrl: string;
   role: string;
   lengthMeters: number;
   crewCount: number;
