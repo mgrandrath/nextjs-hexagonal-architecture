@@ -54,7 +54,7 @@ const spaceships: ApiSpaceship[] = [
   },
   {
     id: "4",
-    name: 'The Rust Bucket "Lucky 7"',
+    name: "The Lucky 7",
     imageUrl: "/spaceships/spaceship_04_the-rust-bucket-lucky-7.png",
     role: "Scavenger Hauler",
     lengthMeters: 65,
@@ -85,6 +85,88 @@ const spaceships: ApiSpaceship[] = [
       "Flat, angular, and triangular, resembling a stealth bomber but sharper. The entire ship is absolute void-black; it looks like a hole in space rather than an object. There are no visible engine exhausts or windows (pilots use VR headsets linked to external cameras). It has a jagged, predatory silhouette.",
     marketNote:
       "Black Budget. The Vantablack coating is chemically unstable and costs a fortune to re-apply. The price includes a wiping of the ship's previous mission logs. Possession of this vessel is a felony in 12 sectors.",
+  },
+  {
+    id: "6",
+    name: "The Xeno-Chrysalis",
+    imageUrl: "/spaceships/spaceship_06_the-xeno-chrysalis.png",
+    role: "Bio-Ship",
+    lengthMeters: 300,
+    crewCount: 1,
+    armament: "Acidic Spore Launchers, Bio-Plasma Spitters",
+    specialFeatures: "Regenerative Hull (heals damage over time)",
+    priceCredits: 15_000_000_000,
+    propulsion: "Peristaltic Ether-Swimmers",
+    visualDescription:
+      "It doesn't look built; it looks grown. The ship resembles a massive deep-sea crustacean mixed with a beetle. The hull is iridescent purple and green chitin. Pulsating veins run along the sides, glowing with orange bioluminescence. Instead of thrusters, the rear has trailing tentacles that drift in the cosmic wind.",
+    marketNote:
+      "Illegal Bio-Hazard. Sold not as a vehicle, but as livestock. The price reflects the danger of capturing it intact. Buyers must provide their own psychic-link interface or the ship will eat the pilot.",
+  },
+  {
+    id: "7",
+    name: "The Solar Flare IV",
+    imageUrl: "/spaceships/spaceship_07_the-solar-flare-iv.png",
+    role: "Racing Pinnace",
+    lengthMeters: 12,
+    crewCount: 1,
+    armament: "None",
+    specialFeatures:
+      "Inertial Dampeners removed to reduce weight (dangerous for the pilot)",
+    priceCredits: 55_000_000,
+    propulsion: "Solar Sail + Fusion Afterburner",
+    visualDescription:
+      "Pure speed. The body is needle-thin, chrome-plated, and polished to a mirror finish. Extending from the top and bottom are massive, gossamer-thin golden solar sails that look like wings. The cockpit is tiny, located at the very rear, sitting atop a massive, singular engine exhaust that takes up 50% of the ship's mass.",
+    marketNote:
+      "Collector's Item. A rich person's death trap. The price is driven by the brand name and the custom fusion tuning. Insurance companies will refuse to cover this vessel.",
+  },
+  {
+    id: "8",
+    name: "The Panacea Orbital",
+    imageUrl: "/spaceships/spaceship_08_the-panacea-orbital.png",
+    role: "Medical Frigate",
+    lengthMeters: 200,
+    crewCount: 50,
+    armament: "Point-defense lasers (anti-asteroid only)",
+    specialFeatures:
+      "Modular quarantine pods that can detach from the main hull",
+    priceCredits: 1_500_000_000,
+    propulsion: "Stabilized Ion Drives",
+    visualDescription:
+      "Clean, sterile, and friendly. The ship is primarily white with the universal red cross symbol painted on the flanks. It consists of a central spine with four rotating cylindrical habitats (to provide gravity for surgery). It emits a soft, blinking white light beacon to signal its neutrality.",
+    marketNote:
+      "Infrastructure Pricing. The hull is standard, but the medical equipment inside (MRI scanners, stasis pods, gravity-surgery theaters) justifies the billion-credit price tag. Often subsidized by planetary alliances.",
+  },
+  {
+    id: "9",
+    name: "The Monolith Vanguard",
+    imageUrl: "/spaceships/spaceship_09_the-monolith-vanguard.png",
+    role: "Ancient/Precursor",
+    lengthMeters: 800,
+    crewCount: 0,
+    armament: "Disintegration Beams",
+    specialFeatures: "Phase-shifting (can turn intangible)",
+    priceCredits: 0,
+    propulsion: "Field Manipulation (moves without visible thrust)",
+    visualDescription:
+      "Terrifyingly geometric. It is a perfect, floating black pyramid. The surface is etched with glowing geometric runes that shift color from cyan to magenta. There are no windows, no engines, and no seams. It hovers silently, defying physics, surrounded by a low-humming distortion field that warps the starlight behind it.",
+    marketNote:
+      "Mythic Rarity. There is no currency in the galaxy that can buy this. If you find it, you don't own it—it owns you. Governments will start wars just to control the sector it is floating in.",
+  },
+  {
+    id: "10",
+    name: "The Diplomat’s Jewel",
+    imageUrl: "/spaceships/spaceship_10_the-diplomats-jewel.png",
+    role: "Luxury Cruiser",
+    lengthMeters: 80,
+    crewCount: 16,
+    armament: "High-yield defensive shields",
+    specialFeatures: "Onboard gravity gardens and zero-g ballroom",
+    priceCredits: 750_000_000,
+    propulsion: "Silent-Running Hydro-Thrusters",
+    visualDescription:
+      "Opulence in space. The ship creates a silhouette of flowing curves, inspired by Art Deco design. The hull is trimmed in gold and deep royal blue. Large, oval stained-glass windows line the sides. It looks less like a military vessel and more like a flying yacht or a piece of expensive jewelry drifting through the stars.",
+    marketNote:
+      "Luxury Tax. You are paying for the gold trim, the real wood flooring, and the brand prestige. It has the shield generator of a warship but the hull strength of a Fabergé egg.",
   },
 ];
 

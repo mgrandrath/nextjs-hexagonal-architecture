@@ -9,6 +9,7 @@ import type {
 } from "./spaceship-list-page-store";
 import { createSpaceshipListPageStore } from "./spaceship-list-page-store";
 import { useStore } from "zustand";
+import { useSpaceshipListPageBrowserWiring } from "./spaceship-list-page-browser-wiring-provider";
 
 const SpaceshipListPageStoreContext =
   createContext<SpaceshipListPageStoreApi | null>(null);
@@ -20,7 +21,10 @@ export type SpaceshipListPageStoreProviderProps = PropsWithChildren<{
 export const SpaceshipListPageStoreProvider: FC<
   SpaceshipListPageStoreProviderProps
 > = ({ initialValues, children }) => {
-  const [store] = useState(() => createSpaceshipListPageStore(initialValues));
+  const browserWiring = useSpaceshipListPageBrowserWiring();
+  const [store] = useState(() =>
+    createSpaceshipListPageStore(browserWiring, initialValues),
+  );
 
   return (
     <SpaceshipListPageStoreContext.Provider value={store}>
