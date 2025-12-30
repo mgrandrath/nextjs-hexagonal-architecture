@@ -9,8 +9,12 @@ type SpaceshipListProps = {
 export const SpaceshipList: FC<SpaceshipListProps> = ({ spaceships }) => {
   return (
     <ul className="flex flex-wrap gap-8 justify-center list-none p-0 m-0">
-      {spaceships.map((spaceship) => (
-        <SpaceshipCard key={spaceship.id} spaceship={spaceship} />
+      {spaceships.map((spaceship, index) => (
+        <SpaceshipCard
+          key={spaceship.id}
+          spaceship={spaceship}
+          isFirstItem={index === 0}
+        />
       ))}
     </ul>
   );
@@ -18,9 +22,13 @@ export const SpaceshipList: FC<SpaceshipListProps> = ({ spaceships }) => {
 
 type SpaceshipListItemProps = {
   spaceship: Spaceship;
+  isFirstItem?: boolean;
 };
 
-const SpaceshipCard: FC<SpaceshipListItemProps> = ({ spaceship }) => {
+const SpaceshipCard: FC<SpaceshipListItemProps> = ({
+  spaceship,
+  isFirstItem,
+}) => {
   return (
     <li
       className="w-[350px] border-2 border-blue-800 bg-white text-black flex flex-col gap-2 p-4"
@@ -40,6 +48,8 @@ const SpaceshipCard: FC<SpaceshipListItemProps> = ({ spaceship }) => {
         width={350}
         height={350}
         alt={spaceship.visualDescription}
+        fetchPriority={isFirstItem ? "high" : "auto"}
+        loading={isFirstItem ? "eager" : "lazy"}
         className="border border-blue-800 mb-2"
         style={{
           width: "100%",
