@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import type { SpaceshipListPageServerPortCollection } from "@/screens/spaceship-list-page/spaceship-list-page-server-port-collection";
+import type { SpaceshipListPageServerPortCollection } from "@/ui-adapter/spaceship-list-page/spaceship-list-page-server-port-collection";
 import { fetchSpaceships } from "@/spaceship-api-adapter/spaceship-api";
 
 export const createSpaceshipListPageWiringForServer =
