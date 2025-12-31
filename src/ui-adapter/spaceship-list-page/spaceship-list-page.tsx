@@ -4,10 +4,11 @@ import { LoadMoreSpaceshipsButtonConnector } from "./load-more-spaceships-button
 
 export const SpaceshipListPage: FC = () => {
   return (
-    <div>
-      <h1>Spaceships</h1>
+    <div className="p-4">
       <SpaceshipListConnector />
-      <LoadMoreSpaceshipsButtonConnector />
+      <div className="mt-4 text-center">
+        <LoadMoreSpaceshipsButtonConnector />
+      </div>
     </div>
   );
 };
