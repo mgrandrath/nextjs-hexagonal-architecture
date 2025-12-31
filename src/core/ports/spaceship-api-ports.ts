@@ -7,3 +7,7 @@ export type FetchSpaceships = (options: {
   spaceships: Spaceship[];
   totalCount: number;
 }>;
+
+export type FetchSpaceship = (options: { spaceshipId: string }) => Promise<{
+  spaceship: Spaceship | null;
+}>;

@@ -1,4 +1,7 @@
-import type { FetchSpaceships } from "@/core/ports/spaceship-api-ports";
+import type {
+  FetchSpaceship,
+  FetchSpaceships,
+} from "@/core/ports/spaceship-api-ports";
 import z from "zod/v4";
 
 export const ApiSpaceshipSchema = z.object({
@@ -18,12 +21,12 @@ export const ApiSpaceshipSchema = z.object({
 
 export type ApiSpaceship = z.infer<typeof ApiSpaceshipSchema>;
 
-export const ApiResponseSchema = z.object({
+export const SpaceshipsApiResponseSchema = z.object({
   spaceships: z.array(ApiSpaceshipSchema),
   totalCount: z.number(),
 });
 
-export type ApiResponse = z.infer<typeof ApiResponseSchema>;
+export type SpaceshipsApiResponse = z.infer<typeof SpaceshipsApiResponseSchema>;
 
 export const fetchSpaceships =
   ({
@@ -42,17 +45,49 @@ export const fetchSpaceships =
 
     const response = await fetch(url);
     const data = await response.json();
-    const apiResponse = ApiResponseSchema.safeParse(data);
+    const parseResult = SpaceshipsApiResponseSchema.safeParse(data);
 
-    if (!apiResponse.success) {
-      throw new Error("Invalid response data", { cause: apiResponse.error });
+    if (!parseResult.success) {
+      throw new Error("Invalid response data", { cause: parseResult.error });
     }
 
     // Map ApiSpaceship data to match Spaceship type if needed (here they are
     // identical)
 
     return {
-      spaceships: apiResponse.data.spaceships,
-      totalCount: apiResponse.data.totalCount,
+      spaceships: parseResult.data.spaceships,
+      totalCount: parseResult.data.totalCount,
+    };
+  };
+
+export const SpaceshipApiResponseSchema = z.object({
+  spaceship: ApiSpaceshipSchema,
+});
+
+export type SpaceshipApiResponse = z.infer<typeof SpaceshipApiResponseSchema>;
+
+export const fetchSpaceship =
+  ({
+    fetch,
+    origin = "",
+  }: {
+    fetch: typeof global.fetch;
+    origin?: string | null;
+  }): FetchSpaceship =>
+  async ({ spaceshipId }) => {
+    const response = await fetch(`${origin}/api/spaceships/${spaceshipId}`);
+    if (response.status === 404) {
+      return { spaceship: null };
+    }
+
+    const data = await response.json();
+    const parseResult = SpaceshipApiResponseSchema.safeParse(data);
+
+    if (!parseResult.success) {
+      throw new Error("Invalid response data", { cause: parseResult.error });
+    }
+
+    return {
+      spaceship: parseResult.data.spaceship,
     };
   };

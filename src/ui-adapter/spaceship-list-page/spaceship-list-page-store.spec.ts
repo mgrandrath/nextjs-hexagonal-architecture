@@ -64,7 +64,7 @@ describe("spaceshipListPageStore", () => {
 
   it("disable 'load more' button while loading more spaceships", async () => {
     const browserWiring = createBrowserWiring();
-    const store = createSpaceshipListPageStore(browserWiring);
+    const store = createSpaceshipListPageStore(browserWiring, {});
     const loadMoreSpaceships = selectLoadMoreSpaceships(store.getState());
 
     expect(selectIsLoadMoreButtonDisabled(store.getState())).toBe(false);

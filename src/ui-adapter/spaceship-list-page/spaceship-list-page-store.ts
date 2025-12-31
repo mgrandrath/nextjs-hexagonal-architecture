@@ -8,7 +8,10 @@ export type SpaceshipListPageStoreState = {
   isLoadingMoreSpaceships: boolean;
 };
 
-const defaultInitialState: SpaceshipListPageStoreState = {
+export type SpaceshipListPageStoreInitialState =
+  Partial<SpaceshipListPageStoreState>;
+
+const defaultState: SpaceshipListPageStoreState = {
   spaceships: [],
   isLoadingMoreSpaceships: false,
 };
@@ -23,10 +26,10 @@ export type SpaceshipListPageStoreApi = StoreApi<SpaceshipListPageStore>;
 
 export const createSpaceshipListPageStore = (
   browserWiring: SpaceshipListPageBrowserPortCollection,
-  initialState: Partial<SpaceshipListPageStoreState> = {},
+  initialState: SpaceshipListPageStoreInitialState,
 ): SpaceshipListPageStoreApi => {
   return createStore<SpaceshipListPageStore>()((set, get) => ({
-    ...defaultInitialState,
+    ...defaultState,
     ...initialState,
 
     loadMoreSpaceships: async () => {

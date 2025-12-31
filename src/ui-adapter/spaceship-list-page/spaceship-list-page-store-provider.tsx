@@ -2,20 +2,20 @@
 
 import type { FC, PropsWithChildren } from "react";
 import { createContext, useContext, useState } from "react";
+import { useStore } from "zustand";
 import type {
   Selector,
   SpaceshipListPageStoreApi,
-  SpaceshipListPageStoreState,
+  SpaceshipListPageStoreInitialState,
 } from "./spaceship-list-page-store";
 import { createSpaceshipListPageStore } from "./spaceship-list-page-store";
-import { useStore } from "zustand";
 import { useSpaceshipListPageBrowserWiring } from "./spaceship-list-page-browser-wiring-provider";
 
 const SpaceshipListPageStoreContext =
   createContext<SpaceshipListPageStoreApi | null>(null);
 
 export type SpaceshipListPageStoreProviderProps = PropsWithChildren<{
-  initialValues: Partial<SpaceshipListPageStoreState>;
+  initialValues: SpaceshipListPageStoreInitialState;
 }>;
 
 export const SpaceshipListPageStoreProvider: FC<

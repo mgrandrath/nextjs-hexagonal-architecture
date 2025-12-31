@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 import type { ApiSpaceship } from "./spaceship-api";
-import { fetchSpaceships } from "./spaceship-api";
+import { fetchSpaceship, fetchSpaceships } from "./spaceship-api";
 import { createApiSpaceship } from "@/test-helpers/factories";
 
 type Fetch = typeof global.fetch;
 
-describe("Spaceship API Adapter", () => {
+describe("fetchSpaceships", () => {
   it("loads spaceships", async () => {
     const fetch = createSpaceshipsFetch([
       createApiSpaceship({ name: "Explorer I" }),
@@ -87,24 +87,101 @@ describe("Spaceship API Adapter", () => {
       "https://example.com/api/spaceships?offset=0&limit=10",
     );
   });
+
+  const createSpaceshipsFetch = (spaceships: ApiSpaceship[]): Fetch => {
+    return async (url) => {
+      const parsedUrl = new URL(url.toString(), "http://localhost");
+      const offset = Number(parsedUrl.searchParams.get("offset"));
+      const limit = Number(parsedUrl.searchParams.get("limit"));
+      const slicedSpaceships = spaceships.slice(offset, offset + limit);
+
+      if (parsedUrl.pathname === "/api/spaceships") {
+        return new Response(
+          JSON.stringify({
+            spaceships: slicedSpaceships,
+            totalCount: spaceships.length,
+          }),
+        );
+      } else {
+        return new Response("Not Found", { status: 404 });
+      }
+    };
+  };
 });
 
-const createSpaceshipsFetch = (spaceships: ApiSpaceship[]): Fetch => {
-  return async (url) => {
-    const parsedUrl = new URL(url.toString(), "http://localhost");
-    const offset = Number(parsedUrl.searchParams.get("offset"));
-    const limit = Number(parsedUrl.searchParams.get("limit"));
-    const slicedSpaceships = spaceships.slice(offset, offset + limit);
+describe("fetchSpaceship", () => {
+  it("loads a spaceship by ID", async () => {
+    const fetch = createSpaceshipFetch(
+      createApiSpaceship({ id: "spaceship-11", name: "Explorer I" }),
+    );
 
-    if (parsedUrl.pathname === "/api/spaceships") {
+    const response = await fetchSpaceship({ fetch })({
+      spaceshipId: "spaceship-11",
+    });
+
+    expect(response).toEqual({
+      spaceship: expect.objectContaining({ name: "Explorer I" }),
+    });
+  });
+
+  it("returns null when spaceship is not found", async () => {
+    const fetch = createSpaceshipFetch();
+
+    const response = await fetchSpaceship({ fetch })({
+      spaceshipId: "non-existent-id",
+    });
+
+    expect(response).toEqual({
+      spaceship: null,
+    });
+  });
+
+  it("throw an error when response data is invalid", async () => {
+    const fetch: Fetch = async () => {
       return new Response(
         JSON.stringify({
-          spaceships: slicedSpaceships,
-          totalCount: spaceships.length,
+          spaceship: { id: "invalid-spaceship" },
         }),
       );
-    } else {
-      return new Response("Not Found", { status: 404 });
-    }
+    };
+
+    await expect(
+      fetchSpaceship({ fetch })({ spaceshipId: "irrelevant-id" }),
+    ).rejects.toThrow("Invalid response data");
+  });
+
+  it("prepend origin when provided", async () => {
+    const fetch = vi.fn<Fetch>(async (_url) => {
+      return new Response(
+        JSON.stringify({
+          spaceship: createApiSpaceship(),
+        }),
+      );
+    });
+
+    await fetchSpaceship({ fetch, origin: "https://example.com" })({
+      spaceshipId: "spaceship-123",
+    });
+
+    expect(fetch).toHaveBeenCalledWith(
+      "https://example.com/api/spaceships/spaceship-123",
+    );
+  });
+
+  const createSpaceshipFetch = (spaceship?: ApiSpaceship): Fetch => {
+    return async (url) => {
+      const parsedUrl = new URL(url.toString(), "http://localhost");
+      const pathPattern = /^\/api\/spaceships\/(.+)$/;
+      const match = parsedUrl.pathname.match(pathPattern);
+      if (match && spaceship && match[1] === spaceship.id) {
+        return new Response(
+          JSON.stringify({
+            spaceship,
+          }),
+        );
+      } else {
+        return new Response("Not Found", { status: 404 });
+      }
+    };
   };
-};
+});

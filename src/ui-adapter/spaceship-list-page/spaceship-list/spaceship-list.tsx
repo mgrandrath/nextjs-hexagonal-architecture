@@ -1,5 +1,6 @@
 import type { Spaceship } from "@/core/spaceship";
 import Image from "next/image";
+import Link from "next/link";
 import type { FC } from "react";
 
 type SpaceshipListProps = {
@@ -31,18 +32,19 @@ const SpaceshipCard: FC<SpaceshipListItemProps> = ({
 }) => {
   return (
     <li
-      className="w-[350px] border-2 border-blue-800 bg-white text-black flex flex-col gap-2 p-4"
+      className="w-[350px] border-2 border-blue-800 bg-white text-black flex flex-col gap-2 p-4 relative"
       style={{
         fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
         boxShadow: "4px 4px 0 #000080",
       }}
     >
-      <span
-        className="block text-xl font-bold text-blue-800 underline mb-2"
+      <Link
+        href={`/spaceships/${spaceship.id}`}
+        className="block text-xl font-bold text-blue-800 underline mb-2 before:content-[''] before:absolute before:inset-0 before:z-1"
         style={{ letterSpacing: "1px" }}
       >
         {spaceship.name}
-      </span>
+      </Link>
       <Image
         src={spaceship.imageUrl}
         width={350}
