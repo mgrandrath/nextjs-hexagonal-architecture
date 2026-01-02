@@ -12,3 +12,10 @@ export type Spaceship = {
   priceCredits: number;
   marketNote: string;
 };
+
+export type SpaceshipAvailability =
+  | "UNKNOWN"
+  | "IN_STOCK"
+  | "OUT_OF_STOCK"
+  | "LOW_STOCK"
+  | "PRE_ORDER";

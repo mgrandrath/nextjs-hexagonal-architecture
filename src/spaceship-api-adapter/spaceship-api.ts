@@ -1,5 +1,6 @@
 import type {
   FetchSpaceship,
+  FetchSpaceshipAvailability,
   FetchSpaceships,
 } from "@/core/ports/spaceship-api-ports";
 import z from "zod/v4";
@@ -89,5 +90,39 @@ export const fetchSpaceship =
 
     return {
       spaceship: parseResult.data.spaceship,
+    };
+  };
+
+export const ApiSpaceshipAvailabilitySchema = z.union([
+  z.literal("UNKNOWN"),
+  z.literal("IN_STOCK"),
+  z.literal("OUT_OF_STOCK"),
+  z.literal("LOW_STOCK"),
+  z.literal("PRE_ORDER"),
+]);
+
+export type ApiSpaceshipAvailability = z.infer<
+  typeof ApiSpaceshipAvailabilitySchema
+>;
+
+export const fetchSpaceshipAvailability =
+  ({ fetch }: { fetch: typeof global.fetch }): FetchSpaceshipAvailability =>
+  async ({ spaceshipId }) => {
+    const response = await fetch(`/api/spaceships/${spaceshipId}/availability`);
+    if (response.status === 404) {
+      return { availability: null };
+    }
+
+    const data = await response.json();
+    const parseResult = ApiSpaceshipAvailabilitySchema.safeParse(
+      data.availability,
+    );
+
+    if (!parseResult.success) {
+      throw new Error("Invalid response data", { cause: parseResult.error });
+    }
+
+    return {
+      availability: parseResult.data,
     };
   };

@@ -1,6 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import type { ApiSpaceship } from "./spaceship-api";
-import { fetchSpaceship, fetchSpaceships } from "./spaceship-api";
+import type { ApiSpaceship, ApiSpaceshipAvailability } from "./spaceship-api";
+import {
+  fetchSpaceship,
+  fetchSpaceshipAvailability,
+  fetchSpaceships,
+} from "./spaceship-api";
 import { createApiSpaceship } from "@/test-helpers/factories";
 
 type Fetch = typeof global.fetch;
@@ -177,6 +181,66 @@ describe("fetchSpaceship", () => {
         return new Response(
           JSON.stringify({
             spaceship,
+          }),
+        );
+      } else {
+        return new Response("Not Found", { status: 404 });
+      }
+    };
+  };
+});
+
+describe("fetchSpaceshipAvailability", () => {
+  it("fetch spaceship availability by ID", async () => {
+    const fetch = createSpaceshipAvailabilityFetch("spaceship-123", "IN_STOCK");
+
+    const response = await fetchSpaceshipAvailability({ fetch })({
+      spaceshipId: "spaceship-123",
+    });
+
+    expect(response).toEqual({
+      availability: "IN_STOCK",
+    });
+  });
+
+  it("returns null when spaceship availability is not found", async () => {
+    const fetch = createSpaceshipAvailabilityFetch();
+
+    const response = await fetchSpaceshipAvailability({ fetch })({
+      spaceshipId: "non-existent-id",
+    });
+
+    expect(response).toEqual({
+      availability: null,
+    });
+  });
+
+  it("throw an error when response data is invalid", async () => {
+    const fetch: Fetch = async () => {
+      return new Response(
+        JSON.stringify({
+          availability: 123,
+        }),
+      );
+    };
+
+    await expect(
+      fetchSpaceshipAvailability({ fetch })({ spaceshipId: "irrelevant-id" }),
+    ).rejects.toThrow("Invalid response data");
+  });
+
+  const createSpaceshipAvailabilityFetch = (
+    spaceshipId?: string,
+    spaceshipAvailability: ApiSpaceshipAvailability = "UNKNOWN",
+  ): Fetch => {
+    return async (url) => {
+      const parsedUrl = new URL(url.toString(), "http://localhost");
+      const pathPattern = /^\/api\/spaceships\/(.+)\/availability$/;
+      const match = parsedUrl.pathname.match(pathPattern);
+      if (match && spaceshipId && match[1] === spaceshipId) {
+        return new Response(
+          JSON.stringify({
+            availability: spaceshipAvailability,
           }),
         );
       } else {

@@ -1,6 +1,7 @@
 import { SpaceshipDetailPage } from "@/ui-adapter/spaceship-detail-page/spaceship-detail-page";
 import { SpaceshipDetailPageStoreProviderRSC } from "@/ui-adapter/spaceship-detail-page/spaceship-detail-page-store-provider.rsc";
 import { createSpaceshipDetailPageWiringForServer } from "@/wiring/spaceship-detail-page/create-spaceship-detail-page-wiring-for-server";
+import { SpaceshipDetailPageWiringForBrowser } from "@/wiring/spaceship-detail-page/spaceship-list-page-wiring-for-browser";
 
 type SpaceshipDetailPagePathParams = {
   spaceshipId: string;
@@ -17,11 +18,13 @@ export default async function SpaceshipDetailPageEntry({
   const { spaceshipId } = await params;
 
   return (
-    <SpaceshipDetailPageStoreProviderRSC
-      serverWiring={serverWiring}
-      spaceshipId={spaceshipId}
-    >
-      <SpaceshipDetailPage />
-    </SpaceshipDetailPageStoreProviderRSC>
+    <SpaceshipDetailPageWiringForBrowser>
+      <SpaceshipDetailPageStoreProviderRSC
+        serverWiring={serverWiring}
+        spaceshipId={spaceshipId}
+      >
+        <SpaceshipDetailPage />
+      </SpaceshipDetailPageStoreProviderRSC>
+    </SpaceshipDetailPageWiringForBrowser>
   );
 }

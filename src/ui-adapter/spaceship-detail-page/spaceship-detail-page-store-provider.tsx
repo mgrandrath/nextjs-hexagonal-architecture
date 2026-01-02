@@ -9,6 +9,7 @@ import {
   type SpaceshipDetailPageStoreApi,
   type SpaceshipDetailPageStoreInitialState,
 } from "./spaceship-detail-page-store";
+import { useSpaceshipDetailPageBrowserWiring } from "./spaceship-detail-page-browser-wiring-provider";
 
 const SpaceshipDetailPageStoreContext =
   createContext<SpaceshipDetailPageStoreApi | null>(null);
@@ -20,7 +21,10 @@ export type SpaceshipDetailPageStoreProviderProps = PropsWithChildren<{
 export const SpaceshipDetailPageStoreProvider: FC<
   SpaceshipDetailPageStoreProviderProps
 > = ({ initialValues, children }) => {
-  const [store] = useState(() => createSpaceshipDetailPageStore(initialValues));
+  const browserWiring = useSpaceshipDetailPageBrowserWiring();
+  const [store] = useState(() =>
+    createSpaceshipDetailPageStore(browserWiring, initialValues),
+  );
 
   return (
     <SpaceshipDetailPageStoreContext.Provider value={store}>

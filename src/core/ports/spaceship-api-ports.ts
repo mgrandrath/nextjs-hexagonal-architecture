@@ -1,4 +1,4 @@
-import type { Spaceship } from "../spaceship";
+import type { Spaceship, SpaceshipAvailability } from "../spaceship";
 
 export type FetchSpaceships = (options: {
   offset: number;
@@ -10,4 +10,10 @@ export type FetchSpaceships = (options: {
 
 export type FetchSpaceship = (options: { spaceshipId: string }) => Promise<{
   spaceship: Spaceship | null;
+}>;
+
+export type FetchSpaceshipAvailability = (options: {
+  spaceshipId: string;
+}) => Promise<{
+  availability: SpaceshipAvailability | null;
 }>;

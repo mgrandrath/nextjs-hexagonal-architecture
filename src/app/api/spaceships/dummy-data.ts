@@ -1,4 +1,7 @@
-import type { ApiSpaceship } from "@/spaceship-api-adapter/spaceship-api";
+import type {
+  ApiSpaceship,
+  ApiSpaceshipAvailability,
+} from "@/spaceship-api-adapter/spaceship-api";
 
 export const spaceships: ApiSpaceship[] = [
   {
@@ -169,3 +172,19 @@ export const spaceships: ApiSpaceship[] = [
       "Luxury Tax. You are paying for the gold trim, the real wood flooring, and the brand prestige. It has the shield generator of a warship but the hull strength of a Fabergé egg.",
   },
 ];
+
+export const spaceshipAvailabilityMap: Record<
+  string,
+  ApiSpaceshipAvailability
+> = {
+  "1": "IN_STOCK",
+  "2": "PRE_ORDER",
+  "3": "LOW_STOCK",
+  "4": "IN_STOCK",
+  "5": "OUT_OF_STOCK",
+  "6": "PRE_ORDER",
+  "7": "IN_STOCK",
+  "8": "LOW_STOCK",
+  "9": "UNKNOWN",
+  "10": "IN_STOCK",
+};
