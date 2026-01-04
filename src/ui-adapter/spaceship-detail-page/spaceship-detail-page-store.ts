@@ -30,15 +30,19 @@ export const createSpaceshipDetailPageStore = (
     ...initialState,
 
     onPageLoad: async () => {
-      set({ isSpaceshipAvailabilityLoading: true });
+      const spaceshipId = selectSpaceship(get()).id;
 
       try {
+        set({ isSpaceshipAvailabilityLoading: true });
         const response = await browserWiring.fetchSpaceshipAvailability({
-          spaceshipId: selectSpaceship(get()).id,
+          spaceshipId,
         });
         set({ spaceshipAvailability: response.availability ?? "UNKNOWN" });
-      } catch (_error) {
-        // TODO Log error to monitoring service
+      } catch (error) {
+        browserWiring.logger.error("Failed to fetch spaceship availability", {
+          spaceshipId,
+          error,
+        });
       } finally {
         set({ isSpaceshipAvailabilityLoading: false });
       }

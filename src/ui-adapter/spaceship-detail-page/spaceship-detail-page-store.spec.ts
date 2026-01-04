@@ -1,4 +1,4 @@
-import { createSpaceship } from "@/test-helpers/factories";
+import { createLogger, createSpaceship } from "@/test-helpers/factories";
 import { describe, expect, it, vi } from "vitest";
 import {
   createSpaceshipDetailPageStore,
@@ -84,12 +84,42 @@ describe("spaceshipDetailPageStore", () => {
 
     expect(selectSpaceshipAvailability(store.getState())).toEqual("UNKNOWN");
   });
+
+  it("when fetching availability fails, an error gets logged", async () => {
+    const error = new Error("Some error message");
+    const browserWiring = createBrowserWiring({
+      logger: createLogger({
+        error: vi.fn(),
+      }),
+      fetchSpaceshipAvailability: async () => {
+        throw error;
+      },
+    });
+    const store = createSpaceshipDetailPageStore(browserWiring, {
+      spaceship: createSpaceship({ id: "spaceship-123" }),
+    });
+    const onPageLoad = selectOnPageLoad(store.getState());
+
+    onPageLoad();
+    await vi.waitUntil(() => {
+      return !selectIsAvailabilityLoading(store.getState());
+    });
+
+    expect(browserWiring.logger.error).toHaveBeenCalledWith(
+      "Failed to fetch spaceship availability",
+      {
+        spaceshipId: "spaceship-123",
+        error,
+      },
+    );
+  });
 });
 
 const createBrowserWiring = (
   overrides: Partial<SpaceshipDetailPageBrowserPortCollection> = {},
 ): SpaceshipDetailPageBrowserPortCollection => {
   return {
+    logger: createLogger(overrides.logger),
     fetchSpaceshipAvailability: async () => {
       return { availability: "UNKNOWN" };
     },

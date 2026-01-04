@@ -1,5 +1,6 @@
 import type { ApiSpaceship } from "@/spaceship-api-adapter/spaceship-api";
-import type { Spaceship } from "../core/spaceship";
+import type { Spaceship } from "@/core/spaceship";
+import type { Logger } from "@/core/ports/monitoring-ports";
 
 let spaceshipIdCounter = 1;
 
@@ -43,6 +44,18 @@ export const createApiSpaceship = (
     priceCredits: 125000000,
     marketNote:
       'High-End Military Surplus. The price is steep for a fighter due to the proprietary "Blink" drive technology. Maintenance costs are astronomical, as the teleportation coils burn out every 50 jumps.',
+    ...overrides,
+  };
+};
+
+export const createLogger = (overrides: Partial<Logger> = {}): Logger => {
+  return {
+    trace: () => {},
+    debug: () => {},
+    info: () => {},
+    warn: () => {},
+    error: () => {},
+    fatal: () => {},
     ...overrides,
   };
 };
