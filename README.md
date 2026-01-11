@@ -43,6 +43,8 @@ external data through the use of Ports. It is never allowed to reference an
 Adapter directly. This means that all dependencies point _inwards_, toward the
 Application. Likewise, all Adapters are independent of each other.
 
+![Hexagonal Architecture diagram](./Hexagonal_Architecture-Standard.drawio.png)
+
 ## Adopting Hexagonal Architecture for a Next.js frontend application
 
 ### Challenges
@@ -96,3 +98,5 @@ pattern matches a fullstack frontend application that spans server and browser.
   the same app may use a database Adapter on the server and later a geolocation
   Adapter in the browser. The Wiring is also customized per page, because not
   every page needs access to every Port.
+
+![Next.js Hexagonal Architecture diagram](./Hexagonal_Architecture-Next.js.drawio.png)
