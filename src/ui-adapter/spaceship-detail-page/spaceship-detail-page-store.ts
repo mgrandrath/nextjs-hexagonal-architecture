@@ -8,9 +8,16 @@ export type SpaceshipDetailPageStoreState = {
   isSpaceshipAvailabilityLoading: boolean;
 };
 
+type RequiredFields = "spaceship";
+
 export type SpaceshipDetailPageStoreInitialState =
   Partial<SpaceshipDetailPageStoreState> &
-    Pick<SpaceshipDetailPageStoreState, "spaceship">;
+    Pick<SpaceshipDetailPageStoreState, RequiredFields>;
+
+const defaultState: Omit<SpaceshipDetailPageStoreState, RequiredFields> = {
+  spaceshipAvailability: "UNKNOWN",
+  isSpaceshipAvailabilityLoading: false,
+};
 
 export type SpaceshipDetailPageStoreActions = {
   onPageLoad: () => void;
@@ -25,8 +32,7 @@ export const createSpaceshipDetailPageStore = (
   initialState: SpaceshipDetailPageStoreInitialState,
 ): SpaceshipDetailPageStoreApi => {
   return createStore<SpaceshipDetailPageStore>()((set, get) => ({
-    spaceshipAvailability: "UNKNOWN",
-    isSpaceshipAvailabilityLoading: false,
+    ...defaultState,
     ...initialState,
 
     onPageLoad: async () => {
