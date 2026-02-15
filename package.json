@@ -18,22 +18,22 @@
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "zod": "^4.2.1",
-    "zustand": "^5.0.9"
+    "zod": "^4.3.6",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@vitest/eslint-plugin": "^1.6.4",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^20.19.33",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/eslint-plugin": "^1.6.9",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.1",
-    "prettier": "^3.7.4",
-    "tailwindcss": "^4",
+    "prettier": "^3.8.1",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.1",
-    "vitest": "^4.0.16"
+    "typescript-eslint": "^8.55.0",
+    "vitest": "^4.0.18"
   }
 }
